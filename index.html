@@ -62,16 +62,8 @@
 <h1 id="authentification">Authentification</h1>
 
 <blockquote>
-<p>Pour chacune de vos requêtes, ajoutez le paramètre suivant :</p>
-</blockquote>
-<pre><code class="highlight json"><span class="err">user_credentials=XXX.</span><span class="w">
+<p>Pour chacune de vos requêtes, ajoutez le paramètre suivant : user_credentials=XXX.</p>
 
-</span></code></pre>
-<pre><code class="highlight xml">user_credentials=XXX.
-
-</code></pre>
-
-<blockquote>
 <p>Pensez à remplacer <code class="prettyprint">XXX</code> par cotre propre jeton d&#39;accès.</p>
 </blockquote>
 
@@ -274,13 +266,12 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 <p>En cas de succès de l&#39;enregistrement, Synapse renvoie l&#39;objet créé au format json.</p>
 </blockquote>
 <pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="err">Mlle</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mlle"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nom"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prénom"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@yopmail.com"</span><span class="p">,</span><span class="w">
-  </span><span class="err">...</span><span class="w">
-</span><span class="err">}</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@yopmail.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
 <blockquote>
@@ -291,15 +282,15 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 
 <p>Permet d’enregistrer une « demande » (nouveau signalement de prospect) dans Synapse.</p>
 
-<p><strong>Type d’accès :</strong> Organizational unit (de niveau UC uniquement)</p>
+<h3 id="habilitation">Habilitation</h3>
 
-<p><strong>Code habilitation :</strong> synapse/create_application_files</p>
+<p>Type d’accès : Organizational unit (de niveau UC uniquement)</p>
+
+<p>Code habilitation : <code class="prettyprint">synapse/create_application_files</code></p>
 
 <h3 id="requête-http">Requête HTTP</h3>
 
 <p><code class="prettyprint">POST /application_files</code></p>
-
-<h3 id="paramètres">Paramètres</h3>
 
 <table><thead>
 <tr>
@@ -336,21 +327,19 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 </blockquote>
 <pre><code class="highlight json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="err">Mlle</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mlle"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nom"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prénom"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@yopmail.com"</span><span class="p">,</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-  </span><span class="err">}</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@yopmail.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="err">M.</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="s2">"M."</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bon"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jean"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0987654321"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yopmail@email.com"</span><span class="p">,</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-  </span><span class="err">}</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yopmail@email.com"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
 
@@ -362,15 +351,15 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 
 <p>Permet d’enregistrer plusieurs « demandes » (nouveau signalement de prospect) dans Synapse en un seul appel.</p>
 
-<p><strong>Type d’accès :</strong> Organizational unit (de niveau UC uniquement)</p>
+<h3 id="habilitation">Habilitation</h3>
 
-<p><strong>Code habilitation :</strong> synapse/create_application_files</p>
+<p>Type d’accès : Organizational unit (de niveau UC uniquement)</p>
+
+<p>Code habilitation : <code class="prettyprint">synapse/create_application_files</code></p>
 
 <h3 id="requête-http">Requête HTTP</h3>
 
 <p><code class="prettyprint">POST /application_files/create_all</code></p>
-
-<h3 id="paramètres">Paramètres</h3>
 
 <table><thead>
 <tr>
@@ -473,7 +462,7 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
                       </span><span class="s2">"mobile_detect"</span><span class="p">:</span><span class="kc">null</span><span class="w">
                     </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="err">...}</span><span class="w">
+  </span><span class="p">{}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 
 </span></code></pre>
@@ -553,9 +542,11 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 
 <p>Permet de lister l’ensemble des demandes de propsect contenues dans Synapse. Le résultat est limité à 200 enregistrements.</p>
 
-<p><strong>Type d’accès :</strong> Organizational unit (de niveau UC uniquement)</p>
+Habilitation</h3>
 
-<p><strong>Code habilitation :</strong> synapse/application_files</p>
+<p>Type d’accès : Organizational unit (de niveau UC uniquement)</p>
+
+<p>Code habilitation : <code class="prettyprint">synapse/application_files</code></p>
 
 <h3 id="requête-http">Requête HTTP</h3>
 
@@ -574,6 +565,59 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 <h3 id="exemple-d&#39;appel">Exemple d&#39;appel</h3>
 
 <p><code class="prettyprint">curl http://fake.fr/synapse/application_files.json?user_credentials=xxx&amp;filter[created_after]=2014-11-03</code></p>
+
+          <h1 id="pays">Pays</h1>
+
+<h2 id="consultation-des-pays">Consultation des pays</h2>
+<pre><code class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"urn:bossanova:country:35027c74-2e8c-48d0-94dc-f46133273e83"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"label"</span><span class="p">:</span><span class="s2">"ACORES"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"code"</span><span class="p">:</span><span class="s2">"P000000001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="s2">"2013-04-18T11:31:56Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"uuid"</span><span class="p">:</span><span class="s2">"urn:bossanova:country:60809c88-d951-45bc-833b-55d4fc9fe195"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"label"</span><span class="p">:</span><span class="s2">"AFGHANISTAN"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"code"</span><span class="p">:</span><span class="s2">"P000000002"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="s2">"2013-04-18T11:31:56Z"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+<pre><code class="highlight xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;countries</span> <span class="na">type=</span><span class="s">"array"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;country&gt;</span>
+    <span class="nt">&lt;uuid&gt;</span>urn:bossanova:country:35027c74-2e8c-48d0-94dc-f46133273e83<span class="nt">&lt;/uuid&gt;</span>
+    <span class="nt">&lt;label&gt;</span>ACORES<span class="nt">&lt;/label&gt;&lt;code&gt;</span>P000000001<span class="nt">&lt;/code&gt;</span>
+    <span class="nt">&lt;updated-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2013-04-18T11:31:56Z<span class="nt">&lt;/updated-at&gt;</span>
+  <span class="nt">&lt;/country&gt;</span>
+  <span class="nt">&lt;country&gt;</span>
+    <span class="nt">&lt;uuid&gt;</span>urn:bossanova:country:60809c88-d951-45bc-833b-55d4fc9fe195<span class="nt">&lt;/uuid&gt;</span>
+    <span class="nt">&lt;label&gt;</span>AFGHANISTAN<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;code&gt;</span>P000000002<span class="nt">&lt;/code&gt;</span>
+    <span class="nt">&lt;updated-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2013-04-18T11:31:56Z<span class="nt">&lt;/updated-at&gt;</span>
+  <span class="nt">&lt;/country&gt;</span>
+  <span class="nt">&lt;country&gt;</span> ... <span class="nt">&lt;/country&gt;</span>
+<span class="nt">&lt;/countries&gt;</span>
+</code></pre>
+
+<p>Permet de récupérer la liste des pays.</p>
+
+<h3 id="habilitation">Habilitation</h3>
+
+<p>Type d’accès : Organizational unit (au moins 1)</p>
+
+<p>Code habilitation : <code class="prettyprint">bossanova/reflist/country/read_country</code></p>
+
+<h3 id="requête-http">Requête HTTP</h3>
+
+<p><code class="prettyprint">GET /bossanova_tunnels/countries</code></p>
+
+<h3 id="exemple-d&#39;appel">Exemple d&#39;appel</h3>
+
+<p><code class="prettyprint">curl http://fake.fr/synapse/countries.json?user_credentials=xxx</code></p>
 
           <h1 id="errors">Errors</h1>
 
