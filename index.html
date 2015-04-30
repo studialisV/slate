@@ -64,7 +64,10 @@
 <blockquote>
 <p>Pour chacune de vos requêtes, ajoutez le paramètre suivant :</p>
 </blockquote>
-<pre><code class="highlight plaintext">user_credentials=XXX.
+<pre><code class="highlight json"><span class="err">user_credentials=XXX.</span><span class="w">
+
+</span></code></pre>
+<pre><code class="highlight xml">user_credentials=XXX.
 
 </code></pre>
 
@@ -268,17 +271,17 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 <h2 id="création-d&#39;un-prospect">Création d&#39;un prospect</h2>
 
 <blockquote>
-<p>En cas de succès de l&#39;enregistrement, Synapse renvoie l&#39;objet créé au format json :</p>
+<p>En cas de succès de l&#39;enregistrement, Synapse renvoie l&#39;objet créé au format json.</p>
 </blockquote>
-<pre><code class="highlight plaintext">{
-  "civility": Mlle,
-  "last_name": "Nom",
-  "first_name": "Prénom",
-  "phone": "0123456789",
-  "email": "email@yopmail.com",
-  ...
-}
-</code></pre>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="err">Mlle</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nom"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prénom"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@yopmail.com"</span><span class="p">,</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
 
 <blockquote>
 <p>Si une erreure est due à un problème lié aux paramètres application_file[xxx], on renvoie un tableau errors avec l’ensemble des erreurs au format json et le code html 422 (unprocessable entity).</p>
@@ -329,27 +332,27 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 <h2 id="création-de-n-prospects">Création de N prospects</h2>
 
 <blockquote>
-<p>En cas de succès de l&#39;enregistrement, Synapse renvoie un tableau des objets en json créés en base :</p>
+<p>En cas de succès de l&#39;enregistrement, Synapse renvoie un tableau des objets en json créés en base.</p>
 </blockquote>
-<pre><code class="highlight plaintext">[
-  {
-    "civility": Mlle,
-    "last_name": "Nom",
-    "first_name": "Prénom",
-    "phone": "0123456789",
-    "email": "email@yopmail.com",
-    ...
-  },
-  {
-    "civility": M.,
-    "last_name": "Bon",
-    "first_name": "Jean",
-    "phone": "0987654321",
-    "email": "yopmail@email.com",
-    ...
-  }
-]
-</code></pre>
+<pre><code class="highlight json"><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="err">Mlle</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Nom"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prénom"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0123456789"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email@yopmail.com"</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="err">}</span><span class="p">,</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"civility"</span><span class="p">:</span><span class="w"> </span><span class="err">M.</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bon"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jean"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0987654321"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"yopmail@email.com"</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="err">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 
 <blockquote>
 <p>Si une erreure est due à un problème lié aux paramètres application_file[xxx], on renvoie un tableau errors avec l’ensemble des erreurs au format json et le code html 422 (unprocessable entity).</p>
@@ -567,6 +570,10 @@ XXX est le jeton d’accès (single access token) de l’utilisateur qui souhait
 <p>Permet de récupérer les demandes créées après la date (ou date time) précisée en paramètre.</p>
 
 <p>Attend soit une date (ex : 2012-12-31) soit une date et heure (ex : 2012-12-11T19:37:24Z) soit un datetime non formatté (2013-01-24 10:16:13.067585)</p>
+
+<h3 id="exemple-d&#39;appel">Exemple d&#39;appel</h3>
+
+<p><code class="prettyprint">curl http://fake.fr/synapse/application_files.json?user_credentials=xxx&amp;filter[created_after]=2014-11-03</code></p>
 
           <h1 id="errors">Errors</h1>
 
