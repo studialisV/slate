@@ -36,7 +36,11 @@ Pour envoyer plusieurs valeurs à un même paramètre, il convient d’ajouter [
 
 > Pour chacune de vos requêtes, ajoutez le paramètre suivant :
 
-```tous
+```json
+user_credentials=XXX.
+
+```
+```xml
 user_credentials=XXX.
 
 ```

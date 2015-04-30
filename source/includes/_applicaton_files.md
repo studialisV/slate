@@ -40,9 +40,9 @@ geoip | @ IP | text
 
 ## Création d'un prospect
 
-> En cas de succès de l'enregistrement, Synapse renvoie l'objet créé au format json :
+> En cas de succès de l'enregistrement, Synapse renvoie l'objet créé au format json.
 
-```tous
+```json
 {
   "civility": Mlle,
   "last_name": "Nom",
@@ -84,9 +84,9 @@ drupal_id | Identifiant drupal
 
 ## Création de N prospects
 
-> En cas de succès de l'enregistrement, Synapse renvoie un tableau des objets en json créés en base :
+> En cas de succès de l'enregistrement, Synapse renvoie un tableau des objets en json créés en base.
 
-```tous
+```json
 [
   {
     "civility": Mlle,
@@ -302,3 +302,7 @@ Permet de lister l’ensemble des demandes de propsect contenues dans Synapse. L
 Permet de récupérer les demandes créées après la date (ou date time) précisée en paramètre.
 
 Attend soit une date (ex : 2012-12-31) soit une date et heure (ex : 2012-12-11T19:37:24Z) soit un datetime non formatté (2013-01-24 10:16:13.067585)
+
+### Exemple d'appel
+
+`curl http://fake.fr/synapse/application_files.json?user_credentials=xxx&filter[created_after]=2014-11-03`
