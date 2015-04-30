@@ -12,6 +12,7 @@ toc_footers:
 
 includes:
   - applicaton_files
+  - countries
   - errors
 
 search: true

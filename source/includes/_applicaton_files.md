@@ -58,15 +58,15 @@ geoip | @ IP | text
 
 Permet d’enregistrer une « demande » (nouveau signalement de prospect) dans Synapse.
 
-**Type d’accès :** Organizational unit (de niveau UC uniquement)
+### Habilitation
 
-**Code habilitation :** synapse/create_application_files
+Type d’accès : Organizational unit (de niveau UC uniquement)
+
+Code habilitation : `synapse/create_application_files`
 
 ### Requête HTTP
 
 `POST /application_files`
-
-### Paramètres
 
 Paramètre | Description 
 --------- | ----------- 
@@ -109,15 +109,15 @@ drupal_id | Identifiant drupal
 
 Permet d’enregistrer plusieurs « demandes » (nouveau signalement de prospect) dans Synapse en un seul appel.
 
-**Type d’accès :** Organizational unit (de niveau UC uniquement)
+### Habilitation
 
-**Code habilitation :** synapse/create_application_files
+Type d’accès : Organizational unit (de niveau UC uniquement)
+
+Code habilitation : `synapse/create_application_files`
 
 ### Requête HTTP
 
 `POST /application_files/create_all`
-
-### Paramètres
 
 Paramètre | Description 
 --------- | ----------- 
@@ -284,9 +284,11 @@ drupal_id | Identifiant drupal
 ```
 Permet de lister l’ensemble des demandes de propsect contenues dans Synapse. Le résultat est limité à 200 enregistrements.
 
-**Type d’accès :** Organizational unit (de niveau UC uniquement)
+### Habilitation
 
-**Code habilitation :** synapse/application_files
+Type d’accès : Organizational unit (de niveau UC uniquement)
+
+Code habilitation : `synapse/application_files`
 
 ### Requête HTTP
 
