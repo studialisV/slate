@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Synapse Reference</title>
 
     <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell","ruby","python"]);
+          setupLanguages(["json","xml"]);
         });
       </script>
   </head>
@@ -28,9 +28,8 @@
     <div class="tocify-wrapper">
       <img src="images/logo.png" />
         <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
+              <a href="#" data-language-name="json">json</a>
+              <a href="#" data-language-name="xml">xml</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -39,156 +38,539 @@
       <div id="toc">
       </div>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='#'>Demander un jeton d'accès</a></li>
             <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+        <h1 id="introduction">Introduction</h1>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Synapse est le module Studialis dédié aux web services de type REST.</p>
 
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
-<h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>Il permet d’exposer et de recevoir les flux d’informations entre les différentes applications du système d’informations.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
+<p>Ces webservices sont disponibles en <a href="https://fake.fr/synapse/version.xml">production</a> ou en <a href="http://fake.fr/synapse/version.xml">préproduction</a>.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
+<p>Les formats XML et JSON sont disponibles pour les services de type GET.</p>
+
+<p>Les paramètres sont cumulatifs sauf si plusieurs valeurs sont envoyées à un même paramètre.</p>
+
+<p>Pour envoyer plusieurs valeurs à un même paramètre, il convient d’ajouter [] après le nom du paramètre. Par exemple : year[]=2011 et year[]=2012. Synapse l’interprètera alors automatiquement comme un tableau de valeurs. Cette option est disponible uniquement sur les paramètres précisés.</p>
+
+<h1 id="authentification">Authentification</h1>
 
 <blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
+<p>Pour chacune de vos requêtes, ajoutez le paramètre suivant :</p>
+</blockquote>
+<pre><code class="highlight plaintext">user_credentials=XXX.
+
+</code></pre>
+
+<blockquote>
+<p>Pensez à remplacer <code class="prettyprint">XXX</code> par cotre propre jeton d&#39;accès.</p>
 </blockquote>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>L’authentification et la gestion des droits liées aux web services se fait via le module Bossanova.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
-
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
-
-<p><aside class="notice">
-You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
+<p>Pour chaque appel aux web services, il convient d’utiliser le paramètre suivant :
+<code class="prettyprint">user_credentials=XXX</code>
+<aside class="notice">
+XXX est le jeton d’accès (single access token) de l’utilisateur qui souhaite accéder au WS. Il est disponible dans la fiche utilisateur de Bossanova.
 </aside></p>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
+<p>Chaque WS a un code d’habilitation lié. Pour autoriser un utilisateur à accéder à un WS, il convient, au sein de Bossanova, de sélectionner la ou les écoles pour lesquelles on souhaite accréditer l’utilisateur puis d’autoriser chaque WS par école de façon directe ou d’utiliser un profil.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+          <h1 id="prospects">Prospects</h1>
+
+<h2 id="description-prospect">Description prospect</h2>
+
+<table><thead>
+<tr>
+<th>Attribut</th>
+<th>Description</th>
+<th>Format</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>civility</td>
+<td>Civilité</td>
+<td>text [M., Mlle, Mme]</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>Nom de famille</td>
+<td>text</td>
+</tr>
+<tr>
+<td>first_name</td>
+<td>Prénom</td>
+<td>text</td>
+</tr>
+<tr>
+<td>birthdate</td>
+<td>Date de naissance</td>
+<td>text jj/mm/aaaa</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>N° de téléphone</td>
+<td>text</td>
+</tr>
+<tr>
+<td>phone_2</td>
+<td>N° de téléphone secondaire</td>
+<td>text</td>
+</tr>
+<tr>
+<td>email</td>
+<td>Email</td>
+<td>text</td>
+</tr>
+<tr>
+<td>address_line_1</td>
+<td>Ligne d&#39;adresse 1</td>
+<td>text</td>
+</tr>
+<tr>
+<td>address_line_2</td>
+<td>Ligne d&#39;adresse 2</td>
+<td>text</td>
+</tr>
+<tr>
+<td>zip_code</td>
+<td>Code postal</td>
+<td>text</td>
+</tr>
+<tr>
+<td>city</td>
+<td>Ville</td>
+<td>text</td>
+</tr>
+<tr>
+<td>country_uuid</td>
+<td>uuid du pays</td>
+<td>text</td>
+</tr>
+<tr>
+<td>nationality_uuid</td>
+<td>uuid de la nationalité</td>
+<td>text</td>
+</tr>
+<tr>
+<td>prospect_study_level_uuid</td>
+<td>uuid du niveau détude</td>
+<td>text</td>
+</tr>
+<tr>
+<td>prospect_initial_training_uuid</td>
+<td>uuid de la formation de cours</td>
+<td>text</td>
+</tr>
+<tr>
+<td>spinneret</td>
+<td>Filière</td>
+<td>text</td>
+</tr>
+<tr>
+<td>commercial_unit_uuid</td>
+<td>uuid de l&#39;UC</td>
+<td>text</td>
+</tr>
+<tr>
+<td>marketing_range_uuid</td>
+<td>uuid de la gamme</td>
+<td>text</td>
+</tr>
+<tr>
+<td>marketing_curriculum_uuid</td>
+<td>uuid du cursus commercial</td>
+<td>text</td>
+</tr>
+<tr>
+<td>teaching_unit_uuid</td>
+<td>uuid du niveau commercial</td>
+<td>text</td>
+</tr>
+<tr>
+<td>marketing_option_uuid</td>
+<td>uuid de l&#39;option commerciale</td>
+<td>text</td>
+</tr>
+<tr>
+<td>rhythm_uuid</td>
+<td>uuid du rythme</td>
+<td>text</td>
+</tr>
+<tr>
+<td>school_year</td>
+<td>identifiant de l&#39;exercice scolaire</td>
+<td>text</td>
+</tr>
+<tr>
+<td>effective_session_uuid</td>
+<td>uuid de la session effective</td>
+<td>text</td>
+</tr>
+<tr>
+<td>source_kind</td>
+<td>Type de la source</td>
+<td>text [online, offline]</td>
+</tr>
+<tr>
+<td>inserting_mode</td>
+<td>Mode d&#39;insertion</td>
+<td>text [Automatique, Import fichier]</td>
+</tr>
+<tr>
+<td>channel_capture_uuid</td>
+<td>uuid du cannal de captation</td>
+<td>text</td>
+</tr>
+<tr>
+<td>origin</td>
+<td>Provenance</td>
+<td>text</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Description</td>
+<td>text</td>
+</tr>
+<tr>
+<td>tracking_date</td>
+<td>Date de tracking</td>
+<td>text aaaa-mm-jj</td>
+</tr>
+<tr>
+<td>prospect_qualification</td>
+<td>???? (contient des dates ou CHAUD ou nawak&hellip;)</td>
+<td>text</td>
+</tr>
+<tr>
+<td>commercial_unit_meeting_uuid</td>
+<td>uuid de l&#39;événement</td>
+<td>text</td>
+</tr>
+<tr>
+<td>paper_doc</td>
+<td>Vrai si demande de documentation au format papier</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>geoip</td>
+<td>@ IP</td>
+<td>text</td>
+</tr>
+</tbody></table>
+
+<h2 id="création-d&#39;un-prospect">Création d&#39;un prospect</h2>
+
+<blockquote>
+<p>En cas de succès de l&#39;enregistrement, Synapse renvoie l&#39;objet créé au format json :</p>
+</blockquote>
+<pre><code class="highlight plaintext">{
+  "civility": Mlle,
+  "last_name": "Nom",
+  "first_name": "Prénom",
+  "phone": "0123456789",
+  "email": "email@yopmail.com",
+  ...
+}
 </code></pre>
 
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>Si une erreure est due à un problème lié aux paramètres application_file[xxx], on renvoie un tableau errors avec l’ensemble des erreurs au format json et le code html 422 (unprocessable entity).</p>
+
+<p>Si une erreur autre s’est produite lors de l’enregistrement, une erreur type est renvoyée au format de l’appel avec le code html qui convient.</p>
+</blockquote>
+
+<p>Permet d’enregistrer une « demande » (nouveau signalement de prospect) dans Synapse.</p>
+
+<p><strong>Type d’accès :</strong> Organizational unit (de niveau UC uniquement)</p>
+
+<p><strong>Code habilitation :</strong> synapse/create_application_files</p>
+
+<h3 id="requête-http">Requête HTTP</h3>
+
+<p><code class="prettyprint">POST /application_files</code></p>
+
+<h3 id="paramètres">Paramètres</h3>
+
+<table><thead>
+<tr>
+<th>Paramètre</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>application_file[nom_attribut]</td>
+<td>Un <a href="#description-prospect">attribut</a> du prospect</td>
+</tr>
+<tr>
+<td>cookies[&hellip;]</td>
+<td>Cookies si provient d&#39;un formulaire html</td>
+</tr>
+<tr>
+<td>geoip</td>
+<td>@ IP</td>
+</tr>
+<tr>
+<td>drupal_id</td>
+<td>Identifiant drupal</td>
+</tr>
+</tbody></table>
+
+<h3 id="exemple-d&#39;appel">Exemple d&#39;appel</h3>
+
+<p><code class="prettyprint">curl --data &quot;application_file[civility]=Mlle&amp;application_file[last_name]=Nom&amp;application_file[first_name]=Prénom&amp;application_file[phone]=0123456789&amp;application_file[email]=email@yopmail.com&quot; http://fake.fr/synapse/application_files.json</code></p>
+
+<h2 id="création-de-n-prospects">Création de N prospects</h2>
+
+<blockquote>
+<p>En cas de succès de l&#39;enregistrement, Synapse renvoie un tableau des objets en json créés en base :</p>
+</blockquote>
+<pre><code class="highlight plaintext">[
+  {
+    "civility": Mlle,
+    "last_name": "Nom",
+    "first_name": "Prénom",
+    "phone": "0123456789",
+    "email": "email@yopmail.com",
+    ...
+  },
+  {
+    "civility": M.,
+    "last_name": "Bon",
+    "first_name": "Jean",
+    "phone": "0987654321",
+    "email": "yopmail@email.com",
+    ...
+  }
+]
+</code></pre>
+
+<blockquote>
+<p>Si une erreure est due à un problème lié aux paramètres application_file[xxx], on renvoie un tableau errors avec l’ensemble des erreurs au format json et le code html 422 (unprocessable entity).</p>
+
+<p>Si une erreur autre s’est produite lors de l’enregistrement, une erreur type est renvoyée au format de l’appel avec le code html qui convient.</p>
+</blockquote>
+
+<p>Permet d’enregistrer plusieurs « demandes » (nouveau signalement de prospect) dans Synapse en un seul appel.</p>
+
+<p><strong>Type d’accès :</strong> Organizational unit (de niveau UC uniquement)</p>
+
+<p><strong>Code habilitation :</strong> synapse/create_application_files</p>
+
+<h3 id="requête-http">Requête HTTP</h3>
+
+<p><code class="prettyprint">POST /application_files/create_all</code></p>
+
+<h3 id="paramètres">Paramètres</h3>
+
+<table><thead>
+<tr>
+<th>Paramètre</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>application_file[n][nom_attribut]</td>
+<td>Un <a href="#description-prospect">attribut</a> du prospect n</td>
+</tr>
+<tr>
+<td>cookies[&hellip;]</td>
+<td>Cookies si provient d&#39;un formulaire html</td>
+</tr>
+<tr>
+<td>geoip</td>
+<td>@ IP</td>
+</tr>
+<tr>
+<td>drupal_id</td>
+<td>Identifiant drupal</td>
+</tr>
+</tbody></table>
+
+<h3 id="exemple-d&#39;appel">Exemple d&#39;appel</h3>
+
+<p><code class="prettyprint">curl --data &quot;application_file[0][civility]=Mlle&amp;application_file[0][last_name]=Nom&amp;application_file[0][first_name]=Prénom&amp;application_file[0][phone]=0123456789&amp;application_file[0][email]=email@yopmail.com&amp;application_file[1][civility]=M.&amp;application_file[1][last_name]=Bon&amp;application_file[1][first_name]=Jean&amp;application_file[1][phone]=0987654321&amp;application_file[1][email]=yopmail@email.com&quot; http://fake.fr/synapse/application_files/create_all.json</code></p>
+
+<h2 id="consultation-des-prospects">Consultation des prospects</h2>
+
+<blockquote>
+<p>Renvoie un tableau d’objets multi profondeurs</p>
 </blockquote>
 <pre><code class="highlight json"><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+    </span><span class="s2">"unformatted_created_at"</span><span class="p">:</span><span class="s2">"2013-01-31 11:04:27.144532"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"civility"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"last_name"</span><span class="p">:</span><span class="s2">"test_31012013_nom_1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"first_name"</span><span class="p">:</span><span class="s2">"test_31012013_florian_1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="s2">"test"</span><span class="p">,</span><span class="s2">"phone_2"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"test_31012013_florian_1@yopmail.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address_line_1"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address_line_2"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"zip_code"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"city"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"birthdate"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"nationality_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prospect_study_level_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prospect_initial_training_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"spinneret"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tracking_date"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"prospect_qualification"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commercial_unit_uuid"</span><span class="p">:</span><span class="s2">"urn:bossanova:commercial_unit:e0b40795-ebcc-423b-a467-55dbfr0f671e"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"marketing_range_uuid"</span><span class="p">:</span><span class="s2">"urn:bossanova:commercial_range:0e285884-4472-4e07-a77b-108fc0yhf7ce"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"marketing_curriculum_uuid"</span><span class="p">:</span><span class="s2">"urn:bossanova:commercial_curriculum:409cbd30-1b47-4546-8d50-9ide4a2beccf8"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"teaching_unit_uuid"</span><span class="p">:</span><span class="s2">"urn:bossanova:commercial_teaching_unit:24d831ce-c592-4827-856f-3adf6aeafa11"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"marketing_option_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rhythm_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"school_year"</span><span class="p">:</span><span class="s2">"2013"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"effective_session_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"commercial_unit_meeting_uuid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"paper_doc"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"source_kind"</span><span class="p">:</span><span class="s2">"Online"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"inserting_mode"</span><span class="p">:</span><span class="s2">"Automatique"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"channel_capture_uuid"</span><span class="p">:</span><span class="s2">"urn:bossanova:prospect_capture_channel:40bb0be7-fe33-4k64-aaf6-c9118d81165d"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"origin"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"drupal_id"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"geoip"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"access_token"</span><span class="p">:</span><span class="s2">"xxx"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"available_accesses"</span><span class="p">:[],</span><span class="w">
+    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="s2">"2013-01-31T11:04:27Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"localization"</span><span class="p">:{</span><span class="w">
+                      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"France"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Paris"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"parsed_cookie"</span><span class="p">:{</span><span class="w">
+                      </span><span class="s2">"utmz"</span><span class="p">:</span><span class="s2">"101601107.1345539724.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"utma"</span><span class="p">:</span><span class="s2">"101601107.1295089060.1345539724.1358414005.1358431435.9"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"campaign_source"</span><span class="p">:</span><span class="s2">"(direct)"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"campaign_name"</span><span class="p">:</span><span class="s2">"(direct)"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"campaign_medium"</span><span class="p">:</span><span class="s2">"(none)"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"campaign_content"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"campaign_term"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"first_visit"</span><span class="p">:</span><span class="s2">"2012-08-21 09:02:04.000000"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"previous_visit"</span><span class="p">:</span><span class="s2">"2013-01-17 09:13:25.000000"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"current_visit_started"</span><span class="p">:</span><span class="s2">"2013-01-17 14:03:55.000000"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"times_visited"</span><span class="p">:</span><span class="s2">"9"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"gclid"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">"OK"</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"proactivePrompt"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"proactiveEngaged"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"chatWith"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"first_page"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+                      </span><span class="s2">"mobile_detect"</span><span class="p">:</span><span class="kc">null</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">{</span><span class="err">...}</span><span class="w">
 </span><span class="p">]</span><span class="w">
+
 </span></code></pre>
-
-<p>This endpoint retrieves all kittens.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://example.com/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
-</tr>
-<tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
-</tr>
-</tbody></table>
-
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre><code class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<pre><code class="highlight xml"><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;application-files</span> <span class="na">type=</span><span class="s">"array"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;application-file&gt;</span>
+    <span class="nt">&lt;unformatted-created-at&gt;</span>2013-01-31 11:04:27.144532<span class="nt">&lt;/unformatted-created-at&gt;</span>
+    <span class="nt">&lt;civility</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;last-name&gt;</span>test_31012013_dupin_1<span class="nt">&lt;/last-name&gt;</span>
+    <span class="nt">&lt;first-name&gt;</span>test_31012013_florian_1<span class="nt">&lt;/first-name&gt;</span>
+    <span class="nt">&lt;phone&gt;</span>test<span class="nt">&lt;/phone&gt;</span>
+    <span class="nt">&lt;phone-2</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;email&gt;</span>test_31012013_florian_1@yopmail.com<span class="nt">&lt;/email&gt;</span>
+    <span class="nt">&lt;address-line-1</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;address-line-2</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;zip-code</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;city</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;country-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;birthdate</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;nationality-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;prospect-study-level-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;prospect-initial-training-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;spinneret</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;description</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;tracking-date</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;prospect-qualification</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;commercial-unit-uuid&gt;</span>urn:bossanova:commercial_unit:e0b40795-ebcc-423b-a467-55dbe20f671e<span class="nt">&lt;/commercial-unit-uuid&gt;</span>
+    <span class="nt">&lt;marketing-range-uuid&gt;</span>urn:bossanova:commercial_range:0e285884-4472-4e07-a77b-108fc01df7ce<span class="nt">&lt;/marketing-range-uuid&gt;</span>
+    <span class="nt">&lt;marketing-curriculum-uuid&gt;</span>urn:bossanova:commercial_curriculum:409cbd30-1b47-4546-8d50-90e4a2beccf8<span class="nt">&lt;/marketing-curriculum-uuid&gt;</span>
+    <span class="nt">&lt;teaching-unit-uuid&gt;</span>urn:bossanova:commercial_teaching_unit:24d831ce-c592-4827-856f-3a066aeafa11<span class="nt">&lt;/teaching-unit-uuid&gt;</span>
+    <span class="nt">&lt;marketing-option-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;rhythm-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;school-year&gt;</span>2013<span class="nt">&lt;/school-year&gt;</span>
+    <span class="nt">&lt;effective-session-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;commercial-unit-meeting-uuid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;paper-doc</span> <span class="na">type=</span><span class="s">"boolean"</span><span class="nt">&gt;</span>false<span class="nt">&lt;/paper-doc&gt;</span>
+    <span class="nt">&lt;source-kind&gt;</span>Online<span class="nt">&lt;/source-kind&gt;</span>
+    <span class="nt">&lt;inserting-mode&gt;</span>Automatique<span class="nt">&lt;/inserting-mode&gt;</span>
+    <span class="nt">&lt;channel-capture-uuid&gt;</span>urn:bossanova:prospect_capture_channel:40bb0be7-fe33-4584-aaf6-c9118d81165d<span class="nt">&lt;/channel-capture-uuid&gt;</span>
+    <span class="nt">&lt;origin</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;drupal-id</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;geoip</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;access-token&gt;</span>yQVBTo5QqrTEZX5mka5<span class="nt">&lt;/access-token&gt;</span>
+    <span class="nt">&lt;available-accesses</span> <span class="na">type=</span><span class="s">"array"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;created-at</span> <span class="na">type=</span><span class="s">"datetime"</span><span class="nt">&gt;</span>2013-01-31T11:04:27Z<span class="nt">&lt;/created-at&gt;</span>
+    <span class="nt">&lt;localization&gt;</span>
+      <span class="nt">&lt;country&gt;</span>France<span class="nt">&lt;/country&gt;</span>
+      <span class="nt">&lt;state</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;city&gt;</span>Paris<span class="nt">&lt;/city&gt;</span>
+      <span class="nt">&lt;latitude</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;latitude</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/localization&gt;</span>
+    <span class="nt">&lt;parsed-cookie&gt;</span>
+      <span class="nt">&lt;utmz&gt;</span>101601107.1345539724.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)<span class="nt">&lt;/utmz&gt;</span>
+      <span class="nt">&lt;utma&gt;</span>101601107.1295089060.1345539724.1358414005.1358431435.9<span class="nt">&lt;/utma&gt;</span>
+      <span class="nt">&lt;campaign-source&gt;</span>(direct)<span class="nt">&lt;/campaign-source&gt;</span>
+      <span class="nt">&lt;campaign-name&gt;</span>(direct)<span class="nt">&lt;/campaign-name&gt;</span>
+      <span class="nt">&lt;campaign-medium&gt;</span>(none)<span class="nt">&lt;/campaign-medium&gt;</span>
+      <span class="nt">&lt;campaign-content</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;campaign-term</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;first-visit&gt;</span>2012-08-21 09:02:04.000000<span class="nt">&lt;/first-visit&gt;</span>
+      <span class="nt">&lt;previous-visit&gt;</span>2013-01-17 09:13:25.000000<span class="nt">&lt;/previous-visit&gt;</span>
+      <span class="nt">&lt;current-visit-started&gt;</span>2013-01-17 14:03:55.000000<span class="nt">&lt;/current-visit-started&gt;</span>
+      <span class="nt">&lt;times-visited&gt;</span>9<span class="nt">&lt;/times-visited&gt;</span>
+      <span class="nt">&lt;gclid</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;status&gt;</span>OK<span class="nt">&lt;/status&gt;</span>
+      <span class="nt">&lt;proactivePrompt</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;proactiveEngaged</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;chatWith</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;first-page</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+      <span class="nt">&lt;mobile-detect</span> <span class="na">nil=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/parsed-cookie&gt;</span>
+  <span class="nt">&lt;/application-file&gt;</span>
+  <span class="nt">&lt;application-file&gt;</span> ... <span class="nt">&lt;/application-file&gt;</span>
+<span class="nt">&lt;/application-files&gt;</span>
 </code></pre>
-<pre><code class="highlight python"><span class="kn">import</span> <span class="nn">kittn</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre>
+<p>Permet de lister l’ensemble des demandes de propsect contenues dans Synapse. Le résultat est limité à 200 enregistrements.</p>
 
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
+<p><strong>Type d’accès :</strong> Organizational unit (de niveau UC uniquement)</p>
 
-<p>This endpoint retrieves a specific kitten.</p>
+<p><strong>Code habilitation :</strong> synapse/application_files</p>
 
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the cat to retrieve</td>
-</tr>
-</tbody></table>
+<h3 id="requête-http">Requête HTTP</h3>
 
-          <h1 id='errors'>Errors</h1>
-<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
+<p><code class="prettyprint">GET /application_files</code></p>
+
+<h3 id="paramètres-facultatifs">Paramètres facultatifs</h3>
+
+<ul>
+<li><code class="prettyprint">filter[created_after]=aaaa-mm-jj</code></li>
+</ul>
+
+<p>Permet de récupérer les demandes créées après la date (ou date time) précisée en paramètre.</p>
+
+<p>Attend soit une date (ex : 2012-12-31) soit une date et heure (ex : 2012-12-11T19:37:24Z) soit un datetime non formatté (2013-01-24 10:16:13.067585)</p>
+
+          <h1 id="errors">Errors</h1>
+
+<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the `includes` folder and add them to the top of your `index.md`&rsquo;s frontmatter. Files are included in the order listed.</aside>
 
 <p>The Kittn API uses the following error codes:</p>
 
@@ -247,9 +629,8 @@ Remember — a happy kitten is an authenticated kitten!
       </div>
       <div class="dark-box">
           <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
+                <a href="#" data-language-name="json">json</a>
+                <a href="#" data-language-name="xml">xml</a>
           </div>
       </div>
     </div>
