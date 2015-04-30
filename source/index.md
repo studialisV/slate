@@ -34,16 +34,7 @@ Pour envoyer plusieurs valeurs à un même paramètre, il convient d’ajouter [
 
 # Authentification
 
-> Pour chacune de vos requêtes, ajoutez le paramètre suivant :
-
-```json
-user_credentials=XXX.
-
-```
-```xml
-user_credentials=XXX.
-
-```
+> Pour chacune de vos requêtes, ajoutez le paramètre suivant : user_credentials=XXX.
 
 > Pensez à remplacer `XXX` par cotre propre jeton d'accès.
 

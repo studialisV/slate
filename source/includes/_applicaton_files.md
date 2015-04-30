@@ -44,12 +44,11 @@ geoip | @ IP | text
 
 ```json
 {
-  "civility": Mlle,
+  "civility": "Mlle",
   "last_name": "Nom",
   "first_name": "Prénom",
   "phone": "0123456789",
-  "email": "email@yopmail.com",
-  ...
+  "email": "email@yopmail.com"
 }
 ```
 
@@ -89,20 +88,18 @@ drupal_id | Identifiant drupal
 ```json
 [
   {
-    "civility": Mlle,
+    "civility": "Mlle",
     "last_name": "Nom",
     "first_name": "Prénom",
     "phone": "0123456789",
-    "email": "email@yopmail.com",
-    ...
+    "email": "email@yopmail.com"
   },
   {
-    "civility": M.,
+    "civility": "M.",
     "last_name": "Bon",
     "first_name": "Jean",
     "phone": "0987654321",
-    "email": "yopmail@email.com",
-    ...
+    "email": "yopmail@email.com"
   }
 ]
 ```
@@ -206,7 +203,7 @@ drupal_id | Identifiant drupal
                       "mobile_detect":null
                     }
   },
-  {...}
+  {}
 ]
 
 ```
